@@ -13,6 +13,12 @@ commentController.addComment = (req, res) => {
 	const { postId } = req;
 	const { text } = req.body;
 
+	let errorFields = [];
+	if (!text) { errorFields.push('Name');  } 
+	if (errorFields.length > 0) {
+		return res.status(422).send({ error: `Field(s) ( ${errorFields.join(', ')} ) have error or is required` });
+	}
+
 	const lastId = dataStore.posts[postId].comments.length - 1;
 	const id = lastId + 1;
 
