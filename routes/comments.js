@@ -1,7 +1,10 @@
 'use strict';
 
 const express = require('express');
-const commentRouter = express.Router();
+
+// you need to set mergeParams: true on the router,
+// if you want to access params from the parent router
+const commentRouter = express.Router({mergeParams: true});
 const commentController = require('./../controllers/commentController');
 
 commentRouter.get('/', commentController.getComments);

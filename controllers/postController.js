@@ -13,6 +13,15 @@ postController.addPost = (req, res) => {
 	const lastId = dataStore.posts.length-1;
 	const id = lastId + 1;
   
+	let errorFields = [];
+	if (!name) { errorFields.push('Name');  } 
+	if (!url) { errorFields.push('URL'); } 
+	if (!text) { errorFields.push('text'); } 
+
+	if (errorFields.length > 0) {
+		return res.status(422).send({ error: `Field(s) ( ${errorFields.join(', ')} ) have error or is required` });
+	}
+
 	const newPost = { name, url, text, comments: [] };
   
 	dataStore.posts.push(newPost);
@@ -38,7 +47,7 @@ postController.updatePost = (req, res) => {
 	let post = dataStore.posts[postId];
 	if (typeof name !== 'undefined') { post.name = name; } 
 	if (typeof url !== 'undefined') { post.url = url; }
-	if (typeof tex !== 'undefined') { post.text = text; } 
+	if (typeof text !== 'undefined') { post.text = text; } 
 	
 	dataStore.posts[postId] = post;
 

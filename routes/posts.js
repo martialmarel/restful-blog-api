@@ -6,11 +6,10 @@ const postRouter = express.Router();
 const commentRouter = require('./comments');
 const postController = require('./../controllers/postController');
 
-// trick for access a "postId" in comments route. Nested Routers in Express.js
-postRouter.use('/:postId/comments', (req, res, next) => {
-    req.postId = req.params.postId;
-    next();
-}, postController.checkIsPostExist, commentRouter);
+postRouter.use('/:postId/comments', 
+    postController.checkIsPostExist, 
+    commentRouter
+);
 
 postRouter.get('/', postController.getPosts);
 

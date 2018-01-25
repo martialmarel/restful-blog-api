@@ -4,14 +4,21 @@ const dataStore = require('./../data/store');
 const commentController = {};
 
 commentController.getComments = (req, res) => {
-	const { postId } = req;
+	const { postId } = req.params;
 
 	res.send(dataStore.posts[postId].comments);
 };
 
 commentController.addComment = (req, res) => {
-	const { postId } = req;
+	//const { postId } = req;
+	const { postId } = req.params;
 	const { text } = req.body;
+
+	let errorFields = [];
+	if (!text) { errorFields.push('Name');  } 
+	if (errorFields.length > 0) {
+		return res.status(422).send({ error: `Field(s) ( ${errorFields.join(', ')} ) have error or is required` });
+	}
 
 	const lastId = dataStore.posts[postId].comments.length - 1;
 	const id = lastId + 1;
@@ -25,8 +32,8 @@ commentController.addComment = (req, res) => {
 };
 
 commentController.checkIsCommentExist = (req, res, next) => {
-	const { postId } = req;
-	const { commentId } = req.params;
+	//const { postId } = req;
+	const { postId, commentId } = req.params;
 
 	const isCommentExist = typeof dataStore.posts[postId].comments[commentId] === 'undefined' ? false : true;
 	if (!isCommentExist) {
@@ -36,8 +43,8 @@ commentController.checkIsCommentExist = (req, res, next) => {
 };
 
 commentController.updateComment = (req, res) => {
-	const { postId } = req;
-	const { commentId } = req.params;
+	//const { postId } = req;
+	const { postId, commentId } = req.params;
 	const { text } = req.body;
 	
 	let comment = dataStore.posts[postId].comments[commentId];
@@ -50,8 +57,8 @@ commentController.updateComment = (req, res) => {
 };
 
 commentController.removeComment = (req, res) => {
-	const { postId } = req;
-	const { commentId } = req.params;
+	//const { postId } = req;
+	const { postId, commentId } = req.params;
 	
 	dataStore.posts[postId].comments.splice(commentId, 1);
   
