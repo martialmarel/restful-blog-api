@@ -27,7 +27,7 @@ postController.addPost = (req, res) => {
 	dataStore.posts.push(newPost);
   
 	res.status(201)
-	  .json({ 'postId': id });
+		.json({ 'postId': id });
 };
 
 postController.checkIsPostExist = (req, res, next) => {

@@ -15,7 +15,7 @@ commentController.addComment = (req, res) => {
 	const { text } = req.body;
 
 	let errorFields = [];
-	if (!text) { errorFields.push('Name');  } 
+	if (!text) { errorFields.push('Name'); }
 	if (errorFields.length > 0) {
 		return res.status(422).send({ error: `Field(s) ( ${errorFields.join(', ')} ) have error or is required` });
 	}
@@ -46,11 +46,11 @@ commentController.updateComment = (req, res) => {
 	//const { postId } = req;
 	const { postId, commentId } = req.params;
 	const { text } = req.body;
-	
+
 	let comment = dataStore.posts[postId].comments[commentId];
 
-	if (typeof text !== 'undefined') { comment.text = text; } 
-	
+	if (typeof text !== 'undefined') { comment.text = text; }
+
 	dataStore.posts[postId].comments[commentId] = comment;
 
 	res.sendStatus(204);
@@ -59,9 +59,9 @@ commentController.updateComment = (req, res) => {
 commentController.removeComment = (req, res) => {
 	//const { postId } = req;
 	const { postId, commentId } = req.params;
-	
+
 	dataStore.posts[postId].comments.splice(commentId, 1);
-  
+
 	res.sendStatus(204);
 };
 

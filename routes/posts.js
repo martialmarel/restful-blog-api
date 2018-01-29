@@ -6,23 +6,23 @@ const postRouter = express.Router();
 const commentRouter = require('./comments');
 const postController = require('./../controllers/postController');
 
-postRouter.use('/:postId/comments', 
-    postController.checkIsPostExist, 
-    commentRouter
+postRouter.use('/:postId/comments',
+	postController.checkIsPostExist,
+	commentRouter
 );
 
 postRouter.get('/', postController.getPosts);
 
 postRouter.post('/', postController.addPost);
 
-postRouter.put('/:postId', 
-    postController.checkIsPostExist, 
-    postController.updatePost
+postRouter.put('/:postId',
+	postController.checkIsPostExist,
+	postController.updatePost
 );
 
-postRouter.delete('/:postId', 
-    postController.checkIsPostExist, 
-    postController.removePost
+postRouter.delete('/:postId',
+	postController.checkIsPostExist,
+	postController.removePost
 );
 
 module.exports = postRouter;
